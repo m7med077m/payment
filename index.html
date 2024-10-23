@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Payment</title>
+    <style>
+       body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #2C3E50; /* Dark blue */
+    color: #ECF0F1; /* Soft white */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    position: relative;
+    background: #34495E; /* Darker blue for the container */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease;
+    max-width: 90%;
+}
+h1 {
+    text-align: center;
+    color: #1ABC9C; /* Teal for headings */
+}
+.theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+.payment-method {
+    display: flex;
+    align-items: center;
+    background: #3B4D61; /* Subtle dark blue for payment methods */
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+.payment-method img {
+    margin-right: 10px;
+    height: 24px;
+}
+.payment-method:hover {
+    transform: scale(1.05);
+    background: #1ABC9C; /* Teal on hover */
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #212F3C; /* Dark blue for pop-up */
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.5s ease-out;
+    max-width: 90%;
+    width: auto;
+    min-width: 300px;
+    text-align: center;
+    word-break: break-word;
+}
+.close {
+    display: block;
+    text-align: right;
+    font-size: 20px;
+    cursor: pointer;
+    color: #1ABC9C; /* Teal for close button */
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+.wallet-address {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.copy-icon {
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #1ABC9C; /* Teal for copy icon */
+}
+.copy-icon img {
+    height: 24px;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes slideIn {
+    from { transform: translate(-50%, -60%); opacity: 0; }
+    to { transform: translate(-50%, -50%); opacity: 1; }
+}
+.dark-mode {
+    background-color: #ECF0F1;
+    color: #2C3E50;
+}
+.dark-mode .container {
+    background: #ECF0F1;
+    color: #2C3E50;
+}
+.dark-mode .payment-method {
+    background: #E5E8E8;
+}
+.dark-mode .popup {
+    background: #E5E8E8;
+}
+.dark-mode .close {
+    color: #2C3E50;
+}
+.dark-mode .copy-icon {
+    color: #2C3E50;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="theme-toggle" onclick="toggleTheme()">
+            <img src="https://img.icons8.com/?size=100&id=UCHNchq2iTGZ&format=png&color=199BE2" alt="Toggle Dark Mode">
+        </div>
+        <h1>Crypto Payment</h1>
+
+        <div class="payment-method" onclick="showPopup('Binance ID', '789564679')">
+            <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.svg" alt="Binance">Binance ID
+        </div>
+        <div class="payment-method" onclick="showPopup('USDT (TRC20)', 'TE1S4PeEws1xq5QaehdrZFW4fPZYZbYiUu')">
+            <img src="https://cryptologos.cc/logos/tether-usdt-logo.svg" alt="USDT (TRC20)">USDT (TRC20)
+        </div>
+        <div class="payment-method" onclick="showPopup('USDT (ERC20)', '0x7a77a233d1e5632b7418d48aa4b9d1609f51b9ae')">
+            <img src="https://cryptologos.cc/logos/tether-usdt-logo.svg" alt="USDT (ERC20)">USDT (ERC20)
+        </div>
+        <div class="payment-method" onclick="showPopup('USDT (BEP20)', '0x7a77a233d1e5632b7418d48aa4b9d1609f51b9ae')">
+            <img src="https://cryptologos.cc/logos/tether-usdt-logo.svg" alt="USDT (BEP20)">USDT (BEP20)
+        </div>
+        <div class="payment-method" onclick="showPopup('TON', 'UQDMzObtdYw3YqlHy3WzSPFwhOQhGhXNED2PFXWAciqUhqu4')">
+            <img src="https://cryptologos.cc/logos/toncoin-ton-logo.svg" alt="TON">TON
+        </div>
+        <div class="payment-method" onclick="showPopup('BTC', '1GV8T9ztQETMEXMgsb5ogMrJv4LuSCq514')">
+            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg" alt="BTC">BTC
+        </div>
+        <div class="payment-method" onclick="showPopup('ETH (ERC20)', '0x7a77a233d1e5632b7418d48aa4b9d1609f51b9ae')">
+            <img src="https://cryptologos.cc/logos/ethereum-eth-logo.svg" alt="ETH (ERC20)">ETH (ERC20)
+        </div>
+    </div>
+
+    <div id="popup" class="popup">
+        <span class="close" onclick="closePopup()">×</span>
+        <h2 id="payment-title"></h2>
+        <div class="wallet-address">
+            <p id="wallet-address"></p>
+            <span class="copy-icon" onclick="copyAddress()">
+                <img src="https://img.icons8.com/?size=100&id=s30bO0DNz4I5&format=png&color=000000" alt="Copy">
+            </span>
+        </div>
+        <img id="qr-code" src="" alt="QR Code">
+    </div>
+
+    <script>
+        function showPopup(title, address) {
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${address}`;
+            document.getElementById('payment-title').textContent = title;
+            document.getElementById('wallet-address').textContent = address;
+            document.getElementById('qr-code').src = qrCodeUrl;
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function copyAddress() {
+            const address = document.getElementById('wallet-address').textContent;
+
+            // Create a temporary textarea element to copy text
+            const tempTextarea = document.createElement('textarea');
+            tempTextarea.value = address;
+            document.body.appendChild(tempTextarea);
+
+            // Select the text and copy it
+            tempTextarea.select();
+            document.execCommand('copy');
+
+            // Remove the temporary element
+            document.body.removeChild(tempTextarea);
+
+            alert('✅Copied! Before making your transfer, please ensure that you are selecting the correct network for your transaction. Sending funds to the wrong network could result in a permanent loss of your money.');
+
+        }
+
+
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
